@@ -21,12 +21,14 @@ Situs ini menyediakan sistem verifikasi database sertifikat halal secara publik 
 ## Persiapan Mandiri (Setup)
 
 1. **Instalasi Dependensi**:
+
    ```sh
    npm install
    ```
 
 2. **Konfigurasi Lingkungan**:
    Salin berkas `.env.example` menjadi `.env` dan isi dengan kredensial Supabase Anda.
+
    ```sh
    cp .env.example .env
    ```
@@ -38,9 +40,9 @@ Situs ini menyediakan sistem verifikasi database sertifikat halal secara publik 
 
 ## Variabel Lingkungan (.env)
 
-| Kunci | Deskripsi |
-| :--- | :--- |
-| `VITE_SUPABASE_URL` | URL proyek Supabase Anda |
+| Kunci                    | Deskripsi                     |
+| :----------------------- | :---------------------------- |
+| `VITE_SUPABASE_URL`      | URL proyek Supabase Anda      |
 | `VITE_SUPABASE_ANON_KEY` | Anon/Public key dari Supabase |
 
 ---
