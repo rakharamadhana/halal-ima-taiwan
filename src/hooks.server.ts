@@ -38,19 +38,48 @@ const auth: Handle = async ({ event, resolve }) => {
 		}
 
 		// Fetch profile data (role, company_name, is_verified)
-		const { data: profile } = await event.locals.supabase
+		let { data: profile, error: profileError } = await event.locals.supabase
 			.from('profiles')
-			.select('role, company_name, is_verified')
+			.select('*')
 			.eq('id', user.id)
 			.single();
+
+		if (profileError) {
+			console.dir(profileError, { depth: null });
+			
+			// Try fallback by email just to see if the ID is the problem
+			console.log(`--- DEBUG: TRYING FALLBACK FETCH BY EMAIL: ${user.email} ---`);
+			const { data: fallbackProfile, error: fallbackError } = await event.locals.supabase
+				.from('profiles')
+				.select('*')
+				.eq('email', user.email)
+				.maybeSingle();
+			
+			if (fallbackProfile) {
+				console.log('--- DEBUG: FOUND PROFILE BY EMAIL BUT NOT BY ID! ---');
+				profile = fallbackProfile;
+			} else if (fallbackError) {
+				console.error('--- HOOKS: FALLBACK ERROR ---', fallbackError);
+			}
+		}
+
+		// Robust role detection: check Profile table, then App Metadata, then User Metadata
+		let rawRole = (profile?.role || user.app_metadata?.role || user.user_metadata?.role || 'company') as string;
+		
+		const role = rawRole.toLowerCase() === 'admin' ? 'admin' : 'company';
+		const company_name = profile?.company_name || user.user_metadata?.company_name || (role === 'admin' ? 'Halal IMA Admin' : '');
+		
+		// Use the column directly from Supabase profiles table
+		const is_verified = profile?.is_verified ?? false;
 
 		return {
 			session,
 			user: {
 				...user,
-				role: profile?.role as 'admin' | 'company' | undefined,
-				company_name: profile?.company_name as string | undefined,
-				is_verified: profile?.is_verified as boolean | undefined
+				...profile, // Include all fields from the profiles table (pic_name, phone, address, etc.)
+				role,
+				company_name,
+				is_verified
 			}
 		};
 	};
@@ -66,6 +95,10 @@ const auth: Handle = async ({ event, resolve }) => {
 
 	if (event.url.pathname.startsWith('/dashboard') && !user) {
 		redirect(303, '/login');
+	}
+
+	if (event.url.pathname.startsWith('/dashboard') && user?.role === 'admin') {
+		redirect(303, '/admin');
 	}
 
 	return resolve(event, {

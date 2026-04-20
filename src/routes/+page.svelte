@@ -74,9 +74,10 @@
 					class="text-primary"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" /></svg
 				>
 			</div>
-			<h3 class="text-xl font-bold">Resmi di KDEI</h3>
-			<p class="text-muted-foreground">
-				Lisensi Halal IMA tercatat secara resmi di Kantor Dagang dan Ekonomi Indonesia.
+			<h3 class="text-xl font-bold">Terdata KDEI Taipei</h3>
+			<p class="text-muted-foreground text-sm">
+				IMA Taiwan yang diresmikan dan tercatat secara resmi di Kantor Dagang dan Ekonomi
+				Indonesia (KDEI) Taipei.
 			</p>
 		</div>
 

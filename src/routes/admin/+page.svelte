@@ -32,7 +32,7 @@
 	</div>
 
 	<!-- Stats Grid -->
-	<div class="mb-8 grid gap-4 md:grid-cols-2 lg:grid-cols-4">
+	<div class="mb-8 grid gap-4 grid-cols-1 sm:grid-cols-2 lg:grid-cols-4">
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 				<Card.Title class="text-sm font-medium">Total Perusahaan</Card.Title>
@@ -89,56 +89,58 @@
 			<Card.Description>Kelola status verifikasi dan informasi akun.</Card.Description>
 		</Card.Header>
 		<Card.Content>
-			<Table.Root>
-				<Table.Header>
-					<Table.Row>
-						<Table.Head>Nama Perusahaan / Email</Table.Head>
-						<Table.Head>Role</Table.Head>
-						<Table.Head>Status</Table.Head>
-						<Table.Head>Tanggal Daftar</Table.Head>
-						<Table.Head class="text-right">Aksi</Table.Head>
-					</Table.Row>
-				</Table.Header>
-				<Table.Body>
-					{#each data.profiles as profile (profile.id)}
+			<div class="overflow-x-auto">
+				<Table.Root>
+					<Table.Header>
 						<Table.Row>
-							<Table.Cell>
-								<div class="flex flex-col">
-									<span class="font-medium">{profile.company_name || 'Personal Account'}</span>
-									<span class="text-xs text-muted-foreground">{profile.email || 'No email'}</span>
-								</div>
-							</Table.Cell>
-							<Table.Cell>
-								<span
-									class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${profile.role === 'admin' ? 'bg-primary/10 text-primary' : 'bg-secondary text-secondary-foreground'}`}
-								>
-									{profile.role}
-								</span>
-							</Table.Cell>
-							<Table.Cell>
-								{#if profile.is_verified}
-									<span class="inline-flex items-center gap-1 text-xs font-medium text-green-600">
-										<CheckCircle2 class="h-3 w-3" /> Terverifikasi
-									</span>
-								{:else}
-									<span class="inline-flex items-center gap-1 text-xs font-medium text-amber-600">
-										<ShieldAlert class="h-3 w-3" /> Pending
-									</span>
-								{/if}
-							</Table.Cell>
-							<Table.Cell class="text-xs">
-								{new Date(profile.created_at).toLocaleDateString('id-ID')}
-							</Table.Cell>
-							<Table.Cell class="text-right">
-								<Button size="xs" variant="outline">Detail</Button>
-								{#if !profile.is_verified}
-									<Button size="xs" class="ml-1 bg-green-600 hover:bg-green-700">Verify</Button>
-								{/if}
-							</Table.Cell>
+							<Table.Head>Nama Perusahaan / Email</Table.Head>
+							<Table.Head>Role</Table.Head>
+							<Table.Head>Status</Table.Head>
+							<Table.Head>Tanggal Daftar</Table.Head>
+							<Table.Head class="text-right">Aksi</Table.Head>
 						</Table.Row>
-					{/each}
-				</Table.Body>
-			</Table.Root>
+					</Table.Header>
+					<Table.Body>
+						{#each data.profiles as profile (profile.id)}
+							<Table.Row>
+								<Table.Cell>
+									<div class="flex flex-col min-w-[200px]">
+										<span class="font-medium">{profile.company_name || 'Personal Account'}</span>
+										<span class="text-xs text-muted-foreground">{profile.email || 'No email'}</span>
+									</div>
+								</Table.Cell>
+								<Table.Cell>
+									<span
+										class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${profile.role === 'admin' ? 'bg-primary/10 text-primary' : 'bg-secondary text-secondary-foreground'}`}
+									>
+										{profile.role}
+									</span>
+								</Table.Cell>
+								<Table.Cell>
+									{#if profile.is_verified}
+										<span class="inline-flex items-center gap-1 text-xs font-medium text-green-600 whitespace-nowrap">
+											<CheckCircle2 class="h-3 w-3" /> Terverifikasi
+										</span>
+									{:else}
+										<span class="inline-flex items-center gap-1 text-xs font-medium text-amber-600 whitespace-nowrap">
+											<ShieldAlert class="h-3 w-3" /> Pending
+										</span>
+									{/if}
+								</Table.Cell>
+								<Table.Cell class="text-xs whitespace-nowrap">
+									{new Date(profile.created_at).toLocaleDateString('id-ID')}
+								</Table.Cell>
+								<Table.Cell class="text-right whitespace-nowrap">
+									<Button size="xs" variant="outline">Detail</Button>
+									{#if !profile.is_verified}
+										<Button size="xs" class="ml-1 bg-green-600 hover:bg-green-700">Verify</Button>
+									{/if}
+								</Table.Cell>
+							</Table.Row>
+						{/each}
+					</Table.Body>
+				</Table.Root>
+			</div>
 		</Card.Content>
 	</Card.Root>
 </div>

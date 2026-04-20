@@ -9,7 +9,8 @@
 		AlertCircle,
 		FilePlus,
 		ArrowRight,
-		CheckCircle2
+		CheckCircle2,
+		LayoutDashboard
 	} from 'lucide-svelte';
 
 	let { data } = $props();
@@ -30,7 +31,9 @@
 	<!-- Welcome Header -->
 	<div class="mb-8 flex flex-col justify-between gap-4 md:flex-row md:items-center">
 		<div>
-			<h1 class="text-3xl font-bold tracking-tight">Dashboard Perusahaan</h1>
+			<h1 class="text-3xl font-bold tracking-tight">
+				{data.user?.role === 'admin' ? 'Panel Admin' : 'Dashboard Perusahaan'}
+			</h1>
 			<p class="text-muted-foreground">
 				Selamat datang, <span class="font-semibold text-foreground"
 					>{data.user?.company_name || data.user?.email}</span
@@ -38,31 +41,52 @@
 			</p>
 		</div>
 		<div class="flex gap-2">
-			<Button href="/procedures" variant="outline" size="sm">Pelajari Prosedur</Button>
-			<Button size="sm" class="gap-2">
-				<FilePlus class="h-4 w-4" /> Ajukan Sertifikasi Baru
-			</Button>
+			{#if data.user?.role === 'admin'}
+				<Button href="/admin" class="gap-2 bg-primary font-bold">
+					<LayoutDashboard class="h-4 w-4" /> Kelola Admin
+				</Button>
+			{:else}
+				<Button href="/procedures" variant="outline" size="sm">Pelajari Prosedur</Button>
+				<Button size="sm" class="gap-2">
+					<FilePlus class="h-4 w-4" /> Ajukan Sertifikasi Baru
+				</Button>
+			{/if}
 		</div>
 	</div>
 
 	<!-- Verification Alert -->
-	{#if !data.user?.is_verified}
-		<div
-			class="mb-8 flex items-start gap-4 rounded-xl border border-amber-200 bg-amber-50 p-6 text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-400"
-		>
-			<AlertCircle class="mt-0.5 h-6 w-6 shrink-0" />
-			<div class="space-y-1">
-				<h3 class="text-lg font-bold">Akun Menunggu Verifikasi</h3>
-				<p class="text-sm opacity-90">
-					Tim Halal IMA sedang meninjau pendaftaran perusahaan Anda. Beberapa fitur mungkin dibatasi
-					hingga akun Anda diverifikasi secara resmi. Kami akan segera menghubungi Anda.
-				</p>
+	{#if data.user}
+		{#if !data.user.is_verified}
+			<div
+				class="mb-8 flex items-start gap-4 rounded-xl border border-amber-200 bg-amber-50 p-6 text-amber-800 dark:border-amber-900/50 dark:bg-amber-950/30 dark:text-amber-400"
+			>
+				<AlertCircle class="mt-0.5 h-6 w-6 shrink-0" />
+				<div class="space-y-1">
+					<h3 class="text-lg font-bold">Akun Menunggu Verifikasi</h3>
+					<p class="text-sm opacity-90">
+						Tim Halal IMA sedang meninjau pendaftaran perusahaan Anda. Beberapa fitur mungkin dibatasi
+						hingga akun Anda diverifikasi secara resmi. Kami akan segera menghubungi Anda.
+					</p>
+				</div>
 			</div>
-		</div>
+		{:else}
+			<div
+				class="mb-8 flex items-start gap-4 rounded-xl border border-green-200 bg-green-50 p-6 text-green-800 dark:border-green-900/50 dark:bg-green-950/30 dark:text-green-400"
+			>
+				<CheckCircle2 class="mt-0.5 h-6 w-6 shrink-0" />
+				<div class="space-y-1">
+					<h3 class="text-lg font-bold">Akun Terverifikasi</h3>
+					<p class="text-sm opacity-90">
+						Selamat! Akun perusahaan Anda telah diverifikasi secara resmi oleh Halal IMA. Anda sekarang
+						memiliki akses penuh ke semua fitur dashboard.
+					</p>
+				</div>
+			</div>
+		{/if}
 	{/if}
 
 	<!-- Quick Stats -->
-	<div class="mb-8 grid gap-4 md:grid-cols-3">
+	<div class="mb-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
 		<Card.Root>
 			<Card.Header class="flex flex-row items-center justify-between space-y-0 pb-2">
 				<Card.Title class="text-sm font-medium">Status Akun</Card.Title>
@@ -113,42 +137,44 @@
 				<Card.Description>Daftar sertifikat resmi yang diterbitkan untuk Anda.</Card.Description>
 			</Card.Header>
 			<Card.Content>
-				<Table.Root>
-					<Table.Header>
-						<Table.Row>
-							<Table.Head>No. Sertifikat</Table.Head>
-							<Table.Head>Berlaku Hingga</Table.Head>
-							<Table.Head>Status</Table.Head>
-							<Table.Head class="text-right">Aksi</Table.Head>
-						</Table.Row>
-					</Table.Header>
-					<Table.Body>
-						{#if data.myCertificates.length === 0}
+				<div class="overflow-x-auto">
+					<Table.Root>
+						<Table.Header>
 							<Table.Row>
-								<Table.Cell colspan={4} class="py-8 text-center text-muted-foreground">
-									Belum ada sertifikat yang ditemukan.
-								</Table.Cell>
+								<Table.Head>No. Sertifikat</Table.Head>
+								<Table.Head>Berlaku Hingga</Table.Head>
+								<Table.Head>Status</Table.Head>
+								<Table.Head class="text-right">Aksi</Table.Head>
 							</Table.Row>
-						{:else}
-							{#each data.myCertificates as cert (cert.id)}
+						</Table.Header>
+						<Table.Body>
+							{#if data.myCertificates.length === 0}
 								<Table.Row>
-									<Table.Cell class="font-mono font-medium">{cert.cert_no}</Table.Cell>
-									<Table.Cell>{cert.expiry_date}</Table.Cell>
-									<Table.Cell>
-										<span
-											class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${cert.status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
-										>
-											{cert.status}
-										</span>
-									</Table.Cell>
-									<Table.Cell class="text-right">
-										<Button size="xs" variant="ghost">Lihat</Button>
+									<Table.Cell colspan={4} class="py-8 text-center text-muted-foreground">
+										Belum ada sertifikat yang ditemukan.
 									</Table.Cell>
 								</Table.Row>
-							{/each}
-						{/if}
-					</Table.Body>
-				</Table.Root>
+							{:else}
+								{#each data.myCertificates as cert (cert.id)}
+									<Table.Row>
+										<Table.Cell class="whitespace-nowrap font-mono font-medium">{cert.cert_no}</Table.Cell>
+										<Table.Cell class="whitespace-nowrap">{cert.expiry_date}</Table.Cell>
+										<Table.Cell>
+											<span
+												class={`inline-flex items-center rounded-full px-2 py-0.5 text-xs font-medium ${cert.status === 'Aktif' ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}
+											>
+												{cert.status}
+											</span>
+										</Table.Cell>
+										<Table.Cell class="text-right">
+											<Button size="xs" variant="ghost">Lihat</Button>
+										</Table.Cell>
+									</Table.Row>
+								{/each}
+							{/if}
+						</Table.Body>
+					</Table.Root>
+				</div>
 			</Card.Content>
 		</Card.Root>
 

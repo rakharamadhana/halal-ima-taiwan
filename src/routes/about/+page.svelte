@@ -48,7 +48,7 @@
 				<div class="text-6xl font-bold text-primary">KDEI</div>
 				<p class="text-xl font-medium">Tercatat Resmi</p>
 				<p class="text-muted-foreground">
-					Lisensi Halal IMA diakui dan tercatat di Kantor Dagang dan Ekonomi Indonesia (KDEI)
+					IMA Taiwan telah diakui dan tercatat di Kantor Dagang dan Ekonomi Indonesia (KDEI)
 					Taipei.
 				</p>
 			</div>

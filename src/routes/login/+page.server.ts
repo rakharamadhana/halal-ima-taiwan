@@ -23,8 +23,8 @@ export const actions: Actions = {
 			return fail(400, { message: 'Email atau kata sandi salah', success: false });
 		}
 
-		// Role-based redirect logic is handled by the `hooks.server.ts` and `load` function
-		// But for the action, we just need to return success or let it redirect
-		return { success: true };
+		// Perform a server-side redirect to force a fresh request cycle.
+		// This ensures hooks.server.ts correctly populates locals.user with the new session data.
+		redirect(303, '/dashboard');
 	}
 };

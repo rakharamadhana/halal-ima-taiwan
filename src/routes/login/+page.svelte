@@ -32,8 +32,8 @@
 				use:enhance={() => {
 					loading = true;
 					return async ({ update }) => {
+						await update();
 						loading = false;
-						update();
 					};
 				}}
 				class="space-y-4"
