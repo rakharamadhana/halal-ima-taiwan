@@ -47,7 +47,7 @@
 				</Button>
 			{:else}
 				<Button href="/procedures" variant="outline" size="sm">Pelajari Prosedur</Button>
-				<Button size="sm" class="gap-2">
+				<Button size="sm" class="gap-2" href="/dashboard/request">
 					<FilePlus class="h-4 w-4" /> Ajukan Sertifikasi Baru
 				</Button>
 			{/if}

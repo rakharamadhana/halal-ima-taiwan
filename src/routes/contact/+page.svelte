@@ -5,7 +5,7 @@
 	import { Label } from '$lib/components/ui/label';
 	import * as Card from '$lib/components/ui/card';
 	import { enhance } from '$app/forms';
-	import { Mail, Phone, MapPin, CheckCircle2 } from 'lucide-svelte';
+	import { Mail, CheckCircle2, Link2, MessageCircle } from 'lucide-svelte';
 
 	let { form } = $props();
 	let isSubmitting = $state(false);
@@ -34,32 +34,44 @@
 					</div>
 					<div>
 						<h3 class="font-bold">Email</h3>
-						<p class="text-muted-foreground">info@halal-ima-taiwan.org</p>
+						<p class="text-muted-foreground">halalimataiwan[@]gmail.com</p>
 					</div>
 				</div>
 
 				<div class="flex items-start space-x-4">
 					<div class="mt-1 rounded-full bg-primary/10 p-2">
-						<Phone class="h-5 w-5 text-primary" />
+						<MessageCircle class="h-5 w-5 text-primary" />
 					</div>
 					<div>
-						<h3 class="font-bold">Telepon</h3>
-						<p class="text-muted-foreground">+886 (02) 1234-5678</p>
+						<h3 class="font-bold">WhatsApp</h3>
+						<a
+							href="https://api.whatsapp.com/send?phone=886903273489&text=Assalammu%27alaikum%2C+saya+mau+bertanya+tentang+Halal+IMA+Taiwan+kak"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+						>
+							Chat via WhatsApp
+						</a>
 					</div>
 				</div>
 
 				<div class="flex items-start space-x-4">
 					<div class="mt-1 rounded-full bg-primary/10 p-2">
-						<MapPin class="h-5 w-5 text-primary" />
+						<Link2 class="h-5 w-5 text-primary" />
 					</div>
 					<div>
-						<h3 class="font-bold">Kantor</h3>
-						<p class="text-muted-foreground">
-							No. 123, Section 4, Roosevelt Rd,<br />
-							Da’an District, Taipei City, Taiwan 106
-						</p>
+						<h3 class="font-bold">Instagram</h3>
+						<a
+							href="https://www.instagram.com/ima_taiwan/"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+						>
+							@ima_taiwan
+						</a>
 					</div>
 				</div>
+
 			</div>
 		</div>
 

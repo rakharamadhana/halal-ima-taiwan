@@ -19,14 +19,14 @@
 	const steps = [
 		{
 			id: 1,
-			title: 'Pendaftaran',
-			desc: 'Pemilik usaha menghubungi CP Halal IMA untuk melakukan pendaftaran.',
+			title: 'Registrasi Akun Perusahaan',
+			desc: 'Daftarkan akun perusahaan terlebih dahulu melalui website ini sebelum memulai pengajuan ketetapan halal.',
 			icon: MessageCircle
 		},
 		{
 			id: 2,
 			title: 'Mengisi dokumen pendaftaran',
-			desc: 'Mengisi formulir dan dokumen persyaratan yang diperlukan.',
+			desc: 'Isi formulir pengajuan dan upload seluruh dokumen persyaratan langsung di website ini.',
 			icon: FileText
 		},
 		{
@@ -80,6 +80,10 @@
 		<h1 class="mb-6 text-4xl font-extrabold tracking-tight md:text-5xl">Alur Lisensi Halal IMA</h1>
 		<p class="text-xl text-muted-foreground">
 			Proses transparan dan efisien untuk mendapatkan sertifikasi Halal Anda di Taiwan.
+		</p>
+		<p class="mt-3 text-sm text-muted-foreground">
+			Semua form pengajuan dan dokumen yang diperlukan diisi serta diunggah melalui website ini. Silakan
+			register sebagai perusahaan, lalu ikuti alur pengajuan ketetapan halal.
 		</p>
 	</div>
 

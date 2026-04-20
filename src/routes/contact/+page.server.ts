@@ -1,9 +1,8 @@
 import { fail } from '@sveltejs/kit';
-import { supabase } from '$lib/supabase';
 import type { Actions } from './$types';
 
 export const actions: Actions = {
-	default: async ({ request }) => {
+	default: async ({ request, locals: { supabase } }) => {
 		const formData = await request.formData();
 		const name = formData.get('name') as string;
 		const email = formData.get('email') as string;
