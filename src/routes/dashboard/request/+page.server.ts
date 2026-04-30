@@ -128,36 +128,12 @@ export const actions: Actions = {
 			return { success: true, message: 'Pengajuan sertifikasi produk berhasil dikirim.' };
 		}
 
-		const fallbackMessage = [
-			`PERMOHONAN SERTIFIKASI PRODUK (${new Date().toISOString()})`,
-			`Perusahaan: ${user.company_name || '-'}`,
-			`Email: ${user.email || '-'}`,
-			`Ruang lingkup: ${requestedScope}`,
-			`Jumlah produk: ${products.length}`,
-			`Jumlah bahan: ${normalizedIngredients.length}`,
-			'',
-			JSON.stringify(payload, null, 2)
-		].join('\n');
+		console.error('Certification request insert failed:', requestError);
 
-		const { error: fallbackError } = await supabase.from('contact_inquiries').insert([
-			{
-				name: user.company_name || user.email || 'Company Applicant',
-				email: user.email || 'unknown@example.com',
-				subject: 'Permohonan Sertifikasi Produk',
-				message: fallbackMessage
-			}
-		]);
-
-		if (fallbackError) {
-			return fail(500, {
-				success: false,
-				message: 'Pengajuan gagal disimpan. Silakan coba lagi.'
-			});
-		}
-
-		return {
-			success: true,
-			message: 'Pengajuan terkirim dan sedang menunggu review auditor.'
-		};
+		return fail(500, {
+			success: false,
+			message:
+				'Pengajuan gagal disimpan ke tabel certification_requests. Pastikan tabel database sudah dibuat.'
+		});
 	}
 };

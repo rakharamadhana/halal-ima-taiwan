@@ -1,11 +1,15 @@
 import { fail, redirect } from '@sveltejs/kit';
 import type { Actions, PageServerLoad } from './$types';
 
-export const load: PageServerLoad = async ({ locals: { user } }) => {
+export const load: PageServerLoad = async ({ locals: { user }, url }) => {
 	if (user) {
 		if (user.role === 'admin') redirect(303, '/admin');
 		redirect(303, '/dashboard');
 	}
+
+	return {
+		resetSuccess: url.searchParams.get('reset') === 'success'
+	};
 };
 
 export const actions: Actions = {

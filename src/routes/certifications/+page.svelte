@@ -3,6 +3,7 @@
 	import { supabase } from '$lib/supabase';
 	import { Input } from '$lib/components/ui/input';
 	import * as Table from '$lib/components/ui/table';
+	import { tr } from '$lib/i18n.svelte';
 
 	interface Certificate {
 		id: number;
@@ -16,46 +17,12 @@
 	let certificates = $state<Certificate[]>([]);
 	let searchQuery = $state('');
 	let isLoading = $state(true);
-
-	// Mock data for initial view or if no Supabase is configured
-	const mockData: Certificate[] = [
-		{
-			id: 1,
-			company_name: 'Taiwan Halal Food Co.',
-			cert_no: 'HIT-2026-001',
-			issue_date: '2026-01-15',
-			expiry_date: '2027-01-14',
-			status: 'Aktif'
-		},
-		{
-			id: 2,
-			company_name: 'Formosa Restaurant',
-			cert_no: 'HIT-2025-089',
-			issue_date: '2025-11-20',
-			expiry_date: '2026-11-19',
-			status: 'Aktif'
-		},
-		{
-			id: 3,
-			company_name: 'Taipei Bakeries Ltd.',
-			cert_no: 'HIT-2024-042',
-			issue_date: '2024-05-10',
-			expiry_date: '2025-05-09',
-			status: 'Berakhir'
-		}
-	];
+	let fetchError = $state('');
 
 	async function fetchCertificates() {
 		isLoading = true;
+		fetchError = '';
 		try {
-			if (
-				!import.meta.env.VITE_SUPABASE_URL ||
-				import.meta.env.VITE_SUPABASE_URL === 'your-supabase-url'
-			) {
-				certificates = mockData;
-				return;
-			}
-
 			const { data, error } = await supabase
 				.from('certificates')
 				.select('*')
@@ -65,8 +32,11 @@
 			certificates = data || [];
 		} catch (err) {
 			console.error('Error fetching certificates:', err);
-			// Fallback to mock data for demonstration
-			certificates = mockData;
+			certificates = [];
+			fetchError = tr(
+				'Database sertifikat belum bisa dimuat. Silakan coba lagi nanti.',
+				'The certificate database could not be loaded. Please try again later.'
+			);
 		} finally {
 			isLoading = false;
 		}
@@ -86,16 +56,19 @@
 </script>
 
 <svelte:head>
-	<title>Sertifikasi yang Diterbitkan - Halal IMA Taiwan</title>
+	<title>{tr('Sertifikasi yang Diterbitkan', 'Issued Certificates')} - Halal IMA Taiwan</title>
 </svelte:head>
 
 <div class="container mx-auto max-w-6xl px-4 py-12">
 	<div class="mb-10 text-center md:text-left">
 		<h1 class="mb-4 text-3xl font-extrabold tracking-tight md:text-4xl">
-			Sertifikasi yang Diterbitkan
+			{tr('Sertifikasi yang Diterbitkan', 'Issued Certificates')}
 		</h1>
 		<p class="max-w-3xl text-xl text-muted-foreground">
-			Cari database resmi kami untuk memverifikasi status Halal perusahaan dan produk di Taiwan.
+			{tr(
+				'Cari database resmi kami untuk memverifikasi status Halal perusahaan dan produk di Taiwan.',
+				'Search our official database to verify the halal status of companies and products in Taiwan.'
+			)}
 		</p>
 	</div>
 
@@ -116,7 +89,10 @@
 			>
 			<Input
 				type="search"
-				placeholder="Cari berdasarkan nama perusahaan atau nomor sertifikat..."
+				placeholder={tr(
+					'Cari berdasarkan nama perusahaan atau nomor sertifikat...',
+					'Search by company name or certificate number...'
+				)}
 				class="pl-9"
 				bind:value={searchQuery}
 			/>
@@ -127,10 +103,10 @@
 		<Table.Root>
 			<Table.Header>
 				<Table.Row>
-					<Table.Head class="w-[250px]">Nama Perusahaan</Table.Head>
-					<Table.Head>No. Sertifikat</Table.Head>
-					<Table.Head>Tanggal Terbit</Table.Head>
-					<Table.Head>Tanggal Kadaluarsa</Table.Head>
+					<Table.Head class="w-[250px]">{tr('Nama Perusahaan', 'Company Name')}</Table.Head>
+					<Table.Head>{tr('No. Sertifikat', 'Certificate No.')}</Table.Head>
+					<Table.Head>{tr('Tanggal Terbit', 'Issue Date')}</Table.Head>
+					<Table.Head>{tr('Tanggal Kadaluarsa', 'Expiry Date')}</Table.Head>
 					<Table.Head class="text-right">Status</Table.Head>
 				</Table.Row>
 			</Table.Header>
@@ -138,13 +114,26 @@
 				{#if isLoading}
 					<Table.Row>
 						<Table.Cell colspan={5} class="py-12 text-center text-muted-foreground"
-							>Memuat database...</Table.Cell
+							>{tr('Memuat database...', 'Loading database...')}</Table.Cell
 						>
+					</Table.Row>
+				{:else if fetchError}
+					<Table.Row>
+						<Table.Cell colspan={5} class="py-12 text-center text-muted-foreground">
+							{fetchError}
+						</Table.Cell>
 					</Table.Row>
 				{:else if filteredCertificates.length === 0}
 					<Table.Row>
 						<Table.Cell colspan={5} class="py-12 text-center text-muted-foreground">
-							Tidak ada sertifikat yang ditemukan untuk "{searchQuery}".
+							{#if searchQuery}
+								{tr('Tidak ada sertifikat yang ditemukan untuk', 'No certificates found for')} "{searchQuery}".
+							{:else}
+								{tr(
+									'Belum ada sertifikat yang diterbitkan.',
+									'No certificates have been issued yet.'
+								)}
+							{/if}
 						</Table.Cell>
 					</Table.Row>
 				{:else}

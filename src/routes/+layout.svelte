@@ -2,10 +2,12 @@
 	import './layout.css';
 	import { ModeWatcher } from 'mode-watcher';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
+	import LanguageToggle from '$lib/components/LanguageToggle.svelte';
 	import { LogIn, LogOut, LayoutDashboard, Menu, X } from 'lucide-svelte';
 	import { Button } from '$lib/components/ui/button';
 	import { enhance } from '$app/forms';
 	import logo from '$lib/assets/logo/halal-ima-transparent.png';
+	import { tr } from '$lib/i18n.svelte';
 
 	let { children, data } = $props();
 	let mobileMenuOpen = $state(false);
@@ -29,37 +31,38 @@
 					</a>
 					<nav class="hidden items-center space-x-6 text-sm font-medium lg:flex">
 						<a href="/about" class="text-foreground/60 transition-colors hover:text-foreground/80">
-							Tentang Kami
+							{tr('Tentang Kami', 'About Us')}
 						</a>
 						<a
 							href="/halal-awareness"
 							class="text-foreground/60 transition-colors hover:text-foreground/80"
 						>
-							Informasi Halal
+							{tr('Informasi Halal', 'Halal Info')}
 						</a>
 						<a
 							href="/procedures"
 							class="text-foreground/60 transition-colors hover:text-foreground/80"
 						>
-							Prosedur
+							{tr('Prosedur', 'Procedure')}
 						</a>
 						<a
 							href="/certifications"
 							class="text-foreground/60 transition-colors hover:text-foreground/80"
 						>
-							Sertifikasi
+							{tr('Sertifikasi', 'Certificates')}
 						</a>
 						<a
 							href="/contact"
 							class="text-foreground/60 transition-colors hover:text-foreground/80"
 						>
-							Hubungi Kami
+							{tr('Hubungi Kami', 'Contact Us')}
 						</a>
 					</nav>
 				</div>
 
 				<div class="flex items-center gap-2 sm:gap-4">
 					<div class="hidden items-center gap-4 sm:flex">
+						<LanguageToggle />
 						<ThemeToggle />
 					</div>
 
@@ -71,13 +74,15 @@
 							>
 								<LayoutDashboard class="h-4 w-4" />
 								<span class="hidden lg:inline"
-									>{data.user.role === 'admin' ? 'Panel Admin' : 'Dashboard'}</span
+									>{data.user.role === 'admin'
+										? tr('Panel Admin', 'Admin Panel')
+										: 'Dashboard'}</span
 								>
 							</a>
 							<form action="/logout" method="POST" use:enhance>
 								<Button variant="ghost" size="sm" type="submit" class="gap-2 text-xs font-bold">
 									<LogOut class="h-4 w-4" />
-									<span class="hidden lg:inline">Keluar</span>
+									<span class="hidden lg:inline">{tr('Keluar', 'Logout')}</span>
 								</Button>
 							</form>
 						{:else}
@@ -86,7 +91,7 @@
 								class="flex items-center gap-2 rounded-full border border-primary px-6 py-2 text-sm font-bold text-primary transition-all hover:bg-primary hover:text-primary-foreground"
 							>
 								<LogIn class="h-4 w-4" />
-								Masuk
+								{tr('Masuk', 'Login')}
 							</a>
 						{/if}
 					</div>
@@ -115,21 +120,23 @@
 			>
 				<nav class="flex flex-col space-y-4 p-6 text-lg font-medium">
 					<a href="/about" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
-						Tentang Kami
+						{tr('Tentang Kami', 'About Us')}
 					</a>
 					<a href="/halal-awareness" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
-						Informasi Halal
+						{tr('Informasi Halal', 'Halal Info')}
 					</a>
 					<a href="/procedures" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
-						Prosedur
+						{tr('Prosedur', 'Procedure')}
 					</a>
 					<a href="/certifications" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
-						Sertifikasi
+						{tr('Sertifikasi', 'Certificates')}
 					</a>
 					<a href="/contact" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
-						Hubungi Kami
+						{tr('Hubungi Kami', 'Contact Us')}
 					</a>
-					<div class="pt-4 text-sm tracking-wider text-muted-foreground uppercase">Akun</div>
+					<div class="pt-4 text-sm tracking-wider text-muted-foreground uppercase">
+						{tr('Akun', 'Account')}
+					</div>
 					{#if data.user}
 						<a
 							href={data.user.role === 'admin' ? '/admin' : '/dashboard'}
@@ -137,7 +144,7 @@
 							onclick={closeMenu}
 						>
 							<LayoutDashboard class="h-5 w-5" />
-							{data.user.role === 'admin' ? 'Panel Admin' : 'Dashboard'}
+							{data.user.role === 'admin' ? tr('Panel Admin', 'Admin Panel') : 'Dashboard'}
 						</a>
 						<form action="/logout" method="POST" use:enhance class="w-full">
 							<button
@@ -146,7 +153,7 @@
 								onclick={closeMenu}
 							>
 								<LogOut class="h-5 w-5" />
-								Keluar
+								{tr('Keluar', 'Logout')}
 							</button>
 						</form>
 					{:else}
@@ -156,11 +163,15 @@
 							onclick={closeMenu}
 						>
 							<LogIn class="h-5 w-5" />
-							Masuk
+							{tr('Masuk', 'Login')}
 						</a>
 					{/if}
 					<div class="flex items-center justify-between border-t pt-6 text-base font-normal">
-						<span>Tema</span>
+						<span>{tr('Bahasa', 'Language')}</span>
+						<LanguageToggle />
+					</div>
+					<div class="flex items-center justify-between border-t pt-6 text-base font-normal">
+						<span>{tr('Tema', 'Theme')}</span>
 						<ThemeToggle />
 					</div>
 				</nav>
@@ -178,11 +189,13 @@
 		>
 			<div class="flex flex-col gap-2">
 				<p class="text-sm leading-loose text-muted-foreground md:text-left">
-					&copy; 2026 Halal IMA Taiwan. Menjamin standar kepatuhan Halal tertinggi.
+					&copy; 2026 Halal IMA Taiwan.
+					{tr(
+						'Menjamin standar kepatuhan Halal tertinggi.',
+						'Ensuring the highest halal compliance standards.'
+					)}
 				</p>
-				<p class="text-xs text-muted-foreground">
-					LINE: @fathurrahman_alhady | Kerjasama dengan Halal Formosa
-				</p>
+				<p class="text-xs text-muted-foreground">LINE: @fathurrahman_alhady</p>
 			</div>
 		</div>
 	</footer>

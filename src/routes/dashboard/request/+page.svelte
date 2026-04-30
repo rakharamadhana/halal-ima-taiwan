@@ -143,10 +143,17 @@
 			</Card.Description>
 		</Card.Header>
 		<Card.Content>
-			<form method="POST" action="?/registerProduct" enctype="multipart/form-data" class="space-y-6">
+			<form
+				method="POST"
+				action="?/registerProduct"
+				enctype="multipart/form-data"
+				class="space-y-6"
+			>
 				<div class="grid gap-2 md:grid-cols-3">
-					<Button type="button" variant={currentStep === 1 ? 'default' : 'outline'} onclick={() => goToStep(1)}
-						>1. Specific Audit</Button
+					<Button
+						type="button"
+						variant={currentStep === 1 ? 'default' : 'outline'}
+						onclick={() => goToStep(1)}>1. Specific Audit</Button
 					>
 					<Button
 						type="button"
@@ -154,17 +161,21 @@
 						disabled={!hasChosenScope}
 						onclick={() => goToStep(2)}>2. Products & Ingredients</Button
 					>
-					<Button type="button" variant={currentStep === 3 ? 'default' : 'outline'} onclick={() => goToStep(3)}
-						>3. Production & Controls</Button
+					<Button
+						type="button"
+						variant={currentStep === 3 ? 'default' : 'outline'}
+						disabled={!hasChosenScope}
+						onclick={() => goToStep(3)}>3. Production & Controls</Button
 					>
 				</div>
 
 				{#if currentStep === 1}
 					<div class="space-y-2">
-						<label class="text-sm font-medium" for="requested_scope">Kategori / Scope Sertifikasi</label>
+						<label class="text-sm font-medium" for="requested_scope"
+							>Kategori / Scope Sertifikasi</label
+						>
 						<select
 							id="requested_scope"
-							name="requested_scope"
 							bind:value={requestedScope}
 							required
 							class="h-10 w-full rounded-md border border-input bg-background px-3 text-sm ring-offset-background"
@@ -321,7 +332,12 @@
 							<div class="space-y-4 rounded-lg border p-4">
 								<div class="flex items-center justify-between">
 									<h4 class="font-semibold">Produk #{productIndex + 1}</h4>
-									<Button type="button" variant="ghost" size="sm" onclick={() => removeProductRow(productIndex)}>
+									<Button
+										type="button"
+										variant="ghost"
+										size="sm"
+										onclick={() => removeProductRow(productIndex)}
+									>
 										Hapus Produk
 									</Button>
 								</div>
@@ -334,7 +350,11 @@
 									<Input bind:value={product.brand} placeholder="Merek" />
 									<Input bind:value={product.product_category} placeholder="Kategori produk" />
 									<Input bind:value={product.estimated_monthly_volume} placeholder="Volume/bulan" />
-									<Input class="md:col-span-2" bind:value={product.production_site} placeholder="Lokasi produksi" />
+									<Input
+										class="md:col-span-2"
+										bind:value={product.production_site}
+										placeholder="Lokasi produksi"
+									/>
 								</div>
 
 								<div class="space-y-3 rounded-md border border-dashed p-3">
@@ -358,9 +378,18 @@
 													required={productIndex === 0 && ingredientIndex === 0}
 												/>
 												<Input bind:value={ingredient.supplier_name} placeholder="Nama pemasok" />
-												<Input bind:value={ingredient.origin_country} placeholder="Negara asal bahan" />
-												<Input bind:value={ingredient.halal_cert_body} placeholder="Lembaga sertifikasi Halal" />
-												<Input bind:value={ingredient.halal_cert_number} placeholder="No sertifikat bahan" />
+												<Input
+													bind:value={ingredient.origin_country}
+													placeholder="Negara asal bahan"
+												/>
+												<Input
+													bind:value={ingredient.halal_cert_body}
+													placeholder="Lembaga sertifikasi Halal"
+												/>
+												<Input
+													bind:value={ingredient.halal_cert_number}
+													placeholder="No sertifikat bahan"
+												/>
 												<Input type="date" bind:value={ingredient.halal_cert_expiry} />
 											</div>
 											<div class="grid gap-3 md:grid-cols-2">
@@ -420,7 +449,9 @@
 							/>
 						</div>
 						<div class="space-y-2">
-							<label class="text-sm font-medium" for="quality_control">Sistem kontrol mutu internal</label>
+							<label class="text-sm font-medium" for="quality_control"
+								>Sistem kontrol mutu internal</label
+							>
 							<Textarea
 								id="quality_control"
 								name="quality_control"
@@ -444,20 +475,32 @@
 					</div>
 				{/if}
 
+				<input type="hidden" name="requested_scope" value={requestedScope} />
 				<input type="hidden" name="products_json" value={JSON.stringify(products)} />
 				<input type="hidden" name="scope_specific_json" value={JSON.stringify(scopeAnswers)} />
 
 				{#if form?.message}
-					<p class={`text-sm ${form?.success ? 'text-green-600' : 'text-red-600'}`}>{form.message}</p>
+					<p class={`text-sm ${form?.success ? 'text-green-600' : 'text-red-600'}`}>
+						{form.message}
+					</p>
 				{/if}
 
 				<div class="flex items-center justify-between gap-2">
 					<div class="flex gap-2">
-						<Button type="button" variant="outline" onclick={previousStep} disabled={currentStep === 1}>
+						<Button
+							type="button"
+							variant="outline"
+							onclick={previousStep}
+							disabled={currentStep === 1}
+						>
 							Sebelumnya
 						</Button>
 						{#if currentStep < 3}
-							<Button type="button" onclick={nextStep} disabled={currentStep === 1 && !hasChosenScope}>
+							<Button
+								type="button"
+								onclick={nextStep}
+								disabled={currentStep === 1 && !hasChosenScope}
+							>
 								Berikutnya
 							</Button>
 						{/if}

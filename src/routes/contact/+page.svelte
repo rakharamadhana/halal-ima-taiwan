@@ -6,13 +6,14 @@
 	import * as Card from '$lib/components/ui/card';
 	import { enhance } from '$app/forms';
 	import { Mail, CheckCircle2, Link2, MessageCircle } from 'lucide-svelte';
+	import { tr } from '$lib/i18n.svelte';
 
 	let { form } = $props();
 	let isSubmitting = $state(false);
 </script>
 
 <svelte:head>
-	<title>Hubungi Kami - Halal IMA Taiwan</title>
+	<title>{tr('Hubungi Kami', 'Contact Us')} - Halal IMA Taiwan</title>
 </svelte:head>
 
 <div class="container mx-auto max-w-6xl px-4 py-16">
@@ -20,10 +21,14 @@
 		<!-- Contact Information -->
 		<div class="space-y-8">
 			<div>
-				<h1 class="mb-4 text-4xl font-extrabold tracking-tight">Hubungi Kami</h1>
+				<h1 class="mb-4 text-4xl font-extrabold tracking-tight">
+					{tr('Hubungi Kami', 'Contact Us')}
+				</h1>
 				<p class="text-xl text-muted-foreground">
-					Punya pertanyaan tentang sertifikasi Halal di Taiwan? Tim kami siap membantu Anda di
-					setiap langkah proses.
+					{tr(
+						'Punya pertanyaan tentang sertifikasi Halal di Taiwan? Tim kami siap membantu Anda di setiap langkah proses.',
+						'Have questions about halal certification in Taiwan? Our team is ready to help you at every step.'
+					)}
 				</p>
 			</div>
 
@@ -50,7 +55,7 @@
 							rel="noopener noreferrer"
 							class="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
 						>
-							Chat via WhatsApp
+							{tr('Chat via WhatsApp', 'Chat via WhatsApp')}
 						</a>
 					</div>
 				</div>
@@ -62,38 +67,42 @@
 					<div>
 						<h3 class="font-bold">Instagram</h3>
 						<a
-							href="https://www.instagram.com/ima_taiwan/"
+							href="https://www.instagram.com/halalimataiwan/"
 							target="_blank"
 							rel="noopener noreferrer"
 							class="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
 						>
-							@ima_taiwan
+							@halalimataiwan
 						</a>
 					</div>
 				</div>
-
 			</div>
 		</div>
 
 		<!-- Contact Form -->
 		<Card.Root class="border-primary/10 bg-card/50 shadow-lg backdrop-blur">
 			<Card.Header>
-				<Card.Title>Kirim Pesan</Card.Title>
+				<Card.Title>{tr('Kirim Pesan', 'Send a Message')}</Card.Title>
 				<Card.Description
-					>Isi formulir di bawah ini dan kami akan menghubungi Anda dalam waktu 24-48 jam.</Card.Description
+					>{tr(
+						'Isi formulir di bawah ini dan kami akan menghubungi Anda dalam waktu 24-48 jam.',
+						'Fill out the form below and we will contact you within 24-48 hours.'
+					)}</Card.Description
 				>
 			</Card.Header>
 			<Card.Content>
 				{#if form?.success}
 					<div class="flex flex-col items-center justify-center space-y-4 py-10 text-center">
 						<CheckCircle2 class="h-16 w-16 text-green-500" />
-						<h3 class="text-2xl font-bold">Pesan Terkirim!</h3>
+						<h3 class="text-2xl font-bold">{tr('Pesan Terkirim!', 'Message Sent!')}</h3>
 						<p class="text-muted-foreground">
-							Terima kasih telah menghubungi kami. Kami akan meninjau pertanyaan Anda dan segera
-							merespons.
+							{tr(
+								'Terima kasih telah menghubungi kami. Kami akan meninjau pertanyaan Anda dan segera merespons.',
+								'Thank you for contacting us. We will review your inquiry and respond soon.'
+							)}
 						</p>
 						<Button variant="outline" onclick={() => window.location.reload()}
-							>Kirim Pesan Lain</Button
+							>{tr('Kirim Pesan Lain', 'Send Another Message')}</Button
 						>
 					</div>
 				{:else}
@@ -110,11 +119,11 @@
 					>
 						<div class="grid grid-cols-1 gap-4 sm:grid-cols-2">
 							<div class="space-y-2">
-								<Label for="name">Nama Lengkap</Label>
+								<Label for="name">{tr('Nama Lengkap', 'Full Name')}</Label>
 								<Input id="name" name="name" placeholder="John Doe" required />
 							</div>
 							<div class="space-y-2">
-								<Label for="email">Alamat Email</Label>
+								<Label for="email">{tr('Alamat Email', 'Email Address')}</Label>
 								<Input
 									id="email"
 									name="email"
@@ -126,28 +135,31 @@
 						</div>
 
 						<div class="space-y-2">
-							<Label for="subject">Subjek</Label>
+							<Label for="subject">{tr('Subjek', 'Subject')}</Label>
 							<Input
 								id="subject"
 								name="subject"
-								placeholder="Bagaimana kami bisa membantu?"
+								placeholder={tr('Bagaimana kami bisa membantu?', 'How can we help?')}
 								required
 							/>
 						</div>
 
 						<div class="space-y-2">
-							<Label for="message">Pesan</Label>
+							<Label for="message">{tr('Pesan', 'Message')}</Label>
 							<Textarea
 								id="message"
 								name="message"
-								placeholder="Detail pertanyaan Anda di sini..."
+								placeholder={tr(
+									'Detail pertanyaan Anda di sini...',
+									'Write your inquiry details here...'
+								)}
 								class="min-h-[150px]"
 								required
 							/>
 						</div>
 
 						<Button type="submit" class="w-full" disabled={isSubmitting}>
-							{isSubmitting ? 'Mengirim...' : 'Kirim Pesan'}
+							{isSubmitting ? tr('Mengirim...', 'Sending...') : tr('Kirim Pesan', 'Send Message')}
 						</Button>
 
 						{#if form?.error}

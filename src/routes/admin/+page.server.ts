@@ -19,8 +19,19 @@ export const load: PageServerLoad = async ({ locals: { supabase } }) => {
 		console.error('Error counting unverified:', cError);
 	}
 
+	const { data: certificationRequests, error: crError } = await supabase
+		.from('certification_requests')
+		.select('*')
+		.in('status', ['submitted', 'under_review'])
+		.order('created_at', { ascending: false });
+
+	if (crError) {
+		console.error('Error fetching certification requests:', crError);
+	}
+
 	return {
 		profiles: profiles || [],
-		unverifiedCount: unverifiedCount || 0
+		unverifiedCount: unverifiedCount || 0,
+		certificationRequests: certificationRequests || []
 	};
 };

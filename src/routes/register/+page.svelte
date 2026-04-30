@@ -6,13 +6,14 @@
 	import { Label } from '$lib/components/ui/label';
 	import * as Alert from '$lib/components/ui/alert';
 	import { Loader2, ShieldCheck, Building2, User, Phone, MapPin } from 'lucide-svelte';
+	import { tr } from '$lib/i18n.svelte';
 
 	let { form } = $props();
 	let loading = $state(false);
 </script>
 
 <svelte:head>
-	<title>Pendaftaran Perusahaan - Halal IMA Taiwan</title>
+	<title>{tr('Pendaftaran Perusahaan', 'Company Registration')} - Halal IMA Taiwan</title>
 </svelte:head>
 
 <div class="container mx-auto flex min-h-[80vh] items-center justify-center px-4 py-16">
@@ -23,8 +24,15 @@
 					<ShieldCheck class="h-6 w-6 text-primary" />
 				</div>
 			</div>
-			<Card.Title class="text-2xl font-bold">Daftar Akun Perusahaan</Card.Title>
-			<Card.Description>Mulai proses sertifikasi halal Anda bersama IMA Taiwan.</Card.Description>
+			<Card.Title class="text-2xl font-bold">
+				{tr('Daftar Akun Perusahaan', 'Register a Company Account')}
+			</Card.Title>
+			<Card.Description>
+				{tr(
+					'Mulai proses sertifikasi halal Anda bersama IMA Taiwan.',
+					'Start your halal certification process with IMA Taiwan.'
+				)}
+			</Card.Description>
 		</Card.Header>
 		<Card.Content>
 			<form
@@ -40,33 +48,35 @@
 			>
 				{#if form?.message}
 					<Alert.Root variant={form.success ? 'default' : 'destructive'} class="mb-4">
-						<Alert.Title>{form.success ? 'Berhasil' : 'Gagal'}</Alert.Title>
+						<Alert.Title
+							>{form.success ? tr('Berhasil', 'Success') : tr('Gagal', 'Failed')}</Alert.Title
+						>
 						<Alert.Description>{form.message}</Alert.Description>
 					</Alert.Root>
 				{/if}
 
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<div class="space-y-2">
-						<Label for="company_name">Nama Perusahaan / Toko</Label>
+						<Label for="company_name">{tr('Nama Perusahaan / Toko', 'Company / Store Name')}</Label>
 						<div class="relative">
 							<Building2 class="absolute top-3 left-3 h-4 w-4 text-muted-foreground" />
 							<Input
 								id="company_name"
 								name="company_name"
-								placeholder="Contoh: Warung Madani"
+								placeholder={tr('Contoh: Warung Madani', 'Example: Madani Restaurant')}
 								class="pl-9"
 								required
 							/>
 						</div>
 					</div>
 					<div class="space-y-2">
-						<Label for="pic_name">Penanggung Jawab (PIC)</Label>
+						<Label for="pic_name">{tr('Penanggung Jawab (PIC)', 'Person in Charge (PIC)')}</Label>
 						<div class="relative">
 							<User class="absolute top-3 left-3 h-4 w-4 text-muted-foreground" />
 							<Input
 								id="pic_name"
 								name="pic_name"
-								placeholder="Nama lengkap"
+								placeholder={tr('Nama lengkap', 'Full name')}
 								class="pl-9"
 								required
 							/>
@@ -76,7 +86,7 @@
 
 				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 					<div class="space-y-2">
-						<Label for="phone">Nomor Telepon / LINE</Label>
+						<Label for="phone">{tr('Nomor Telepon / LINE', 'Phone Number / LINE')}</Label>
 						<div class="relative">
 							<Phone class="absolute top-3 left-3 h-4 w-4 text-muted-foreground" />
 							<Input id="phone" name="phone" placeholder="09xx-xxx-xxx" class="pl-9" required />
@@ -95,13 +105,13 @@
 				</div>
 
 				<div class="space-y-2">
-					<Label for="address">Alamat Bisnis di Taiwan</Label>
+					<Label for="address">{tr('Alamat Bisnis di Taiwan', 'Business Address in Taiwan')}</Label>
 					<div class="relative">
 						<MapPin class="absolute top-3 left-3 h-4 w-4 text-muted-foreground" />
 						<Input
 							id="address"
 							name="address"
-							placeholder="Alamat lengkap usaha"
+							placeholder={tr('Alamat lengkap usaha', 'Complete business address')}
 							class="pl-9"
 							required
 						/>
@@ -110,11 +120,11 @@
 
 				<div class="grid grid-cols-1 gap-4 border-t pt-4 md:grid-cols-2">
 					<div class="space-y-2">
-						<Label for="password">Kata Sandi</Label>
+						<Label for="password">{tr('Kata Sandi', 'Password')}</Label>
 						<Input id="password" name="password" type="password" required />
 					</div>
 					<div class="space-y-2">
-						<Label for="confirmPassword">Konfirmasi Kata Sandi</Label>
+						<Label for="confirmPassword">{tr('Konfirmasi Kata Sandi', 'Confirm Password')}</Label>
 						<Input id="confirmPassword" name="confirmPassword" type="password" required />
 					</div>
 				</div>
@@ -122,17 +132,18 @@
 				<Button type="submit" class="w-full font-bold" disabled={loading}>
 					{#if loading}
 						<Loader2 class="mr-2 h-4 w-4 animate-spin" />
-						Memproses...
+						{tr('Memproses...', 'Processing...')}
 					{:else}
-						Daftar Sekarang
+						{tr('Daftar Sekarang', 'Register Now')}
 					{/if}
 				</Button>
 			</form>
 		</Card.Content>
 		<Card.Footer class="flex justify-center border-t py-4">
 			<p class="text-sm text-muted-foreground">
-				Sudah punya akun? <a href="/login" class="font-bold text-primary hover:underline"
-					>Masuk di sini</a
+				{tr('Sudah punya akun?', 'Already have an account?')}
+				<a href="/login" class="font-bold text-primary hover:underline"
+					>{tr('Masuk di sini', 'Login here')}</a
 				>
 			</p>
 		</Card.Footer>

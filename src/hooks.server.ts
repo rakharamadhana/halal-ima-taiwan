@@ -18,6 +18,20 @@ const auth: Handle = async ({ event, resolve }) => {
 		}
 	});
 
+	if (event.url.pathname === '/reset-password' && event.url.searchParams.has('code')) {
+		const code = event.url.searchParams.get('code');
+
+		if (code) {
+			const { error } = await event.locals.supabase.auth.exchangeCodeForSession(code);
+
+			if (error) {
+				redirect(303, '/reset-password?expired=true');
+			}
+
+			redirect(303, '/reset-password');
+		}
+	}
+
 	/**
 	 * Unlike `supabase.auth.getSession()`, which returns the session from the cookie without
 	 * verifying it, `safeGetSession()` performs a network request to verify the session.
@@ -46,7 +60,7 @@ const auth: Handle = async ({ event, resolve }) => {
 
 		if (profileError) {
 			console.dir(profileError, { depth: null });
-			
+
 			// Try fallback by email just to see if the ID is the problem
 			console.log(`--- DEBUG: TRYING FALLBACK FETCH BY EMAIL: ${user.email} ---`);
 			const { data: fallbackProfile, error: fallbackError } = await event.locals.supabase
@@ -54,7 +68,7 @@ const auth: Handle = async ({ event, resolve }) => {
 				.select('*')
 				.eq('email', user.email)
 				.maybeSingle();
-			
+
 			if (fallbackProfile) {
 				console.log('--- DEBUG: FOUND PROFILE BY EMAIL BUT NOT BY ID! ---');
 				profile = fallbackProfile;
@@ -64,11 +78,17 @@ const auth: Handle = async ({ event, resolve }) => {
 		}
 
 		// Robust role detection: check Profile table, then App Metadata, then User Metadata
-		let rawRole = (profile?.role || user.app_metadata?.role || user.user_metadata?.role || 'company') as string;
-		
+		let rawRole = (profile?.role ||
+			user.app_metadata?.role ||
+			user.user_metadata?.role ||
+			'company') as string;
+
 		const role = rawRole.toLowerCase() === 'admin' ? 'admin' : 'company';
-		const company_name = profile?.company_name || user.user_metadata?.company_name || (role === 'admin' ? 'Halal IMA Admin' : '');
-		
+		const company_name =
+			profile?.company_name ||
+			user.user_metadata?.company_name ||
+			(role === 'admin' ? 'Halal IMA Admin' : '');
+
 		// Use the column directly from Supabase profiles table
 		const is_verified = profile?.is_verified ?? false;
 

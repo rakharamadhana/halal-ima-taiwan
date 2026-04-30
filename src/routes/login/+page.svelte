@@ -6,13 +6,14 @@
 	import { Label } from '$lib/components/ui/label';
 	import * as Alert from '$lib/components/ui/alert';
 	import { Loader2, LockKeyhole } from 'lucide-svelte';
+	import { tr } from '$lib/i18n.svelte';
 
-	let { form } = $props();
+	let { data, form } = $props();
 	let loading = $state(false);
 </script>
 
 <svelte:head>
-	<title>Masuk - Halal IMA Taiwan</title>
+	<title>{tr('Masuk', 'Login')} - Halal IMA Taiwan</title>
 </svelte:head>
 
 <div class="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-24">
@@ -23,8 +24,15 @@
 					<LockKeyhole class="h-6 w-6 text-primary" />
 				</div>
 			</div>
-			<Card.Title class="text-2xl font-bold">Selamat Datang Kembali</Card.Title>
-			<Card.Description>Masuk ke akun Anda untuk mengelola sertifikasi.</Card.Description>
+			<Card.Title class="text-2xl font-bold">
+				{tr('Selamat Datang Kembali', 'Welcome Back')}
+			</Card.Title>
+			<Card.Description>
+				{tr(
+					'Masuk ke akun Anda untuk mengelola sertifikasi.',
+					'Log in to your account to manage certifications.'
+				)}
+			</Card.Description>
 		</Card.Header>
 		<Card.Content>
 			<form
@@ -38,9 +46,23 @@
 				}}
 				class="space-y-4"
 			>
+				{#if data.resetSuccess}
+					<Alert.Root
+						class="mb-4 border-green-200 bg-green-50 text-green-800 dark:border-green-900 dark:bg-green-950 dark:text-green-200"
+					>
+						<Alert.Title>{tr('Kata Sandi Berhasil Diubah', 'Password Updated')}</Alert.Title>
+						<Alert.Description>
+							{tr(
+								'Silakan masuk menggunakan kata sandi baru Anda.',
+								'Please log in using your new password.'
+							)}
+						</Alert.Description>
+					</Alert.Root>
+				{/if}
+
 				{#if form?.message}
 					<Alert.Root variant="destructive" class="mb-4">
-						<Alert.Title>Gagal Masuk</Alert.Title>
+						<Alert.Title>{tr('Gagal Masuk', 'Login Failed')}</Alert.Title>
 						<Alert.Description>{form.message}</Alert.Description>
 					</Alert.Root>
 				{/if}
@@ -52,8 +74,10 @@
 
 				<div class="space-y-2">
 					<div class="flex items-center justify-between">
-						<Label for="password">Kata Sandi</Label>
-						<a href="/forgot-password" class="text-xs text-primary hover:underline">Lupa sandi?</a>
+						<Label for="password">{tr('Kata Sandi', 'Password')}</Label>
+						<a href="/forgot-password" class="text-xs text-primary hover:underline">
+							{tr('Lupa sandi?', 'Forgot password?')}
+						</a>
 					</div>
 					<Input id="password" name="password" type="password" required />
 				</div>
@@ -61,17 +85,18 @@
 				<Button type="submit" class="w-full font-bold" disabled={loading}>
 					{#if loading}
 						<Loader2 class="mr-2 h-4 w-4 animate-spin" />
-						Memproses...
+						{tr('Memproses...', 'Processing...')}
 					{:else}
-						Masuk
+						{tr('Masuk', 'Login')}
 					{/if}
 				</Button>
 			</form>
 		</Card.Content>
 		<Card.Footer class="flex flex-col gap-4 border-t py-6">
 			<p class="w-full text-center text-sm text-muted-foreground">
-				Belum punya akun? <br class="sm:hidden" />
-				<a href="/register" class="font-bold text-primary hover:underline">Daftar Akun Perusahaan</a
+				{tr('Belum punya akun?', 'Do not have an account yet?')} <br class="sm:hidden" />
+				<a href="/register" class="font-bold text-primary hover:underline"
+					>{tr('Daftar Akun Perusahaan', 'Register a Company Account')}</a
 				>
 			</p>
 		</Card.Footer>

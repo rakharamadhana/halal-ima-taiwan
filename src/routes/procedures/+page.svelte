@@ -1,6 +1,7 @@
 <script lang="ts">
 	import * as Card from '$lib/components/ui/card';
 	import { Button } from '$lib/components/ui/button';
+	import { tr } from '$lib/i18n.svelte';
 	import {
 		FileText,
 		SearchCheck,
@@ -16,74 +17,102 @@
 		MessageCircle
 	} from 'lucide-svelte';
 
-	const steps = [
+	const steps = $derived([
 		{
 			id: 1,
-			title: 'Registrasi Akun Perusahaan',
-			desc: 'Daftarkan akun perusahaan terlebih dahulu melalui website ini sebelum memulai pengajuan ketetapan halal.',
+			title: tr('Registrasi Akun Perusahaan', 'Register a Company Account'),
+			desc: tr(
+				'Daftarkan akun perusahaan terlebih dahulu melalui website ini sebelum memulai pengajuan ketetapan halal.',
+				'Register your company account on this website before starting a halal approval request.'
+			),
 			icon: MessageCircle
 		},
 		{
 			id: 2,
-			title: 'Mengisi dokumen pendaftaran',
-			desc: 'Isi formulir pengajuan dan upload seluruh dokumen persyaratan langsung di website ini.',
+			title: tr('Mengisi dokumen pendaftaran', 'Complete Registration Documents'),
+			desc: tr(
+				'Isi formulir pengajuan dan upload seluruh dokumen persyaratan langsung di website ini.',
+				'Fill in the application form and upload all required documents directly on this website.'
+			),
 			icon: FileText
 		},
 		{
 			id: 3,
-			title: 'Pemeriksaan dokumen',
-			desc: 'Dokumen yang telah diisi akan diperiksa lebih lanjut oleh tim Halal IMA.',
+			title: tr('Pemeriksaan dokumen', 'Document Review'),
+			desc: tr(
+				'Dokumen yang telah diisi akan diperiksa lebih lanjut oleh tim Halal IMA.',
+				'Submitted documents will be reviewed further by the Halal IMA team.'
+			),
 			icon: SearchCheck
 		},
 		{
 			id: 4,
-			title: 'Penerbitan Invoice',
-			desc: 'Setelah dokumen disetujui, Tim Halal IMA akan menerbitkan invoice.',
+			title: tr('Penerbitan Invoice', 'Invoice Issuance'),
+			desc: tr(
+				'Setelah dokumen disetujui, Tim Halal IMA akan menerbitkan invoice.',
+				'After documents are approved, the Halal IMA team will issue an invoice.'
+			),
 			icon: FileSpreadsheet
 		},
 		{
 			id: 5,
-			title: 'Pembayaran',
-			desc: 'Melakukan pembayaran sesuai dengan invoice yang diterbitkan.',
+			title: tr('Pembayaran', 'Payment'),
+			desc: tr(
+				'Melakukan pembayaran sesuai dengan invoice yang diterbitkan.',
+				'Complete payment according to the issued invoice.'
+			),
 			icon: CreditCard
 		},
 		{
 			id: 6,
-			title: 'Pemeriksaan Lapangan',
-			desc: 'Audit, inspeksi, dan validasi dokumen, produk, serta alur produksi di lokasi usaha.',
+			title: tr('Pemeriksaan Lapangan', 'On-site Inspection'),
+			desc: tr(
+				'Audit, inspeksi, dan validasi dokumen, produk, serta alur produksi di lokasi usaha.',
+				'Audit, inspection, and validation of documents, products, and production flow at the business location.'
+			),
 			icon: MapPin
 		},
 		{
 			id: 7,
-			title: 'Penerbitan Lisensi',
-			desc: 'Lisensi halal diterbitkan dan dikirim langsung ke alamat pemilik usaha.',
+			title: tr('Penerbitan Lisensi', 'License Issuance'),
+			desc: tr(
+				'Lisensi halal diterbitkan dan dikirim langsung ke alamat pemilik usaha.',
+				'The halal license is issued and sent directly to the business owner address.'
+			),
 			icon: Award
 		}
-	];
+	]);
 
-	const scope = [
-		{ title: 'Warung Makan', icon: Utensils },
-		{ title: 'Restoran', icon: Store },
-		{ title: 'Supplier Daging', icon: Beef },
+	const scope = $derived([
+		{ title: tr('Warung Makan', 'Food Stalls'), icon: Utensils },
+		{ title: tr('Restoran', 'Restaurants'), icon: Store },
+		{ title: tr('Supplier Daging', 'Meat Suppliers'), icon: Beef },
 		{ title: 'Hotel', icon: Hotel },
-		{ title: 'Tempat Wisata', icon: Palmtree }
-	];
+		{ title: tr('Tempat Wisata', 'Tourist Attractions'), icon: Palmtree }
+	]);
 </script>
 
 <svelte:head>
-	<title>Prosedur Sertifikasi - Halal IMA Taiwan</title>
+	<title>{tr('Prosedur Sertifikasi', 'Certification Procedure')} - Halal IMA Taiwan</title>
 </svelte:head>
 
 <div class="container mx-auto max-w-5xl px-4 py-16">
 	<!-- Header -->
 	<div class="mb-20 text-center">
-		<h1 class="mb-6 text-4xl font-extrabold tracking-tight md:text-5xl">Alur Lisensi Halal IMA</h1>
+		<h1 class="mb-6 text-4xl font-extrabold tracking-tight md:text-5xl">
+			{tr('Alur Lisensi Halal IMA', 'Halal IMA License Flow')}
+		</h1>
 		<p class="text-xl text-muted-foreground">
-			Proses transparan dan efisien untuk mendapatkan sertifikasi Halal Anda di Taiwan.
+			{tr(
+				'Proses transparan dan efisien untuk mendapatkan sertifikasi Halal Anda di Taiwan.',
+				'A transparent and efficient process to obtain your halal certification in Taiwan.'
+			)}
 		</p>
 		<p class="mt-3 text-sm text-muted-foreground">
-			Semua form pengajuan dan dokumen yang diperlukan diisi serta diunggah melalui website ini. Silakan
-			register sebagai perusahaan, lalu ikuti alur pengajuan ketetapan halal.
+			{tr(
+				'Semua form pengajuan dan dokumen yang diperlukan diisi serta diunggah melalui website ini. Silakan register sebagai perusahaan, lalu ikuti alur pengajuan ketetapan halal.',
+				'All application forms and required documents are completed and uploaded through this website. Please register as a company, then follow the halal approval submission flow.'
+			)}
 		</p>
 	</div>
 
@@ -118,9 +147,12 @@
 	<!-- Ruang Lingkup Section -->
 	<div class="mb-24 pt-12">
 		<div class="mb-12 text-center">
-			<h2 class="mb-4 text-3xl font-bold">Ruang Lingkup</h2>
+			<h2 class="mb-4 text-3xl font-bold">{tr('Ruang Lingkup', 'Scope')}</h2>
 			<p class="text-muted-foreground">
-				Lisensi Halal IMA mencakup berbagai jenis usaha di seluruh Taiwan.
+				{tr(
+					'Lisensi Halal IMA mencakup berbagai jenis usaha di seluruh Taiwan.',
+					'Halal IMA licenses cover various business types across Taiwan.'
+				)}
 			</p>
 		</div>
 		<div class="grid grid-cols-2 gap-4 md:grid-cols-5">
@@ -144,24 +176,31 @@
 		<div class="absolute top-0 right-0 p-4">
 			<span
 				class="rounded-full bg-primary px-3 py-1 text-xs font-bold tracking-wider text-primary-foreground uppercase"
-				>Promo Terbatas</span
+				>{tr('Promo Terbatas', 'Limited Promo')}</span
 			>
 		</div>
 		<Card.Header class="pt-10 text-center">
-			<Card.Title class="text-2xl">Tarif Layanan</Card.Title>
-			<Card.Description>Harga spesial untuk 10 pelanggan pertama</Card.Description>
+			<Card.Title class="text-2xl">{tr('Tarif Layanan', 'Service Fee')}</Card.Title>
+			<Card.Description
+				>{tr(
+					'Harga spesial untuk 10 pelanggan pertama',
+					'Special price for the first 10 customers'
+				)}</Card.Description
+			>
 		</Card.Header>
 		<Card.Content class="text-center">
 			<div class="mb-6">
 				<span class="text-5xl font-extrabold text-primary">NTD 5.000</span>
-				<span class="text-muted-foreground">/ tahun</span>
+				<span class="text-muted-foreground">{tr('/ tahun', '/ year')}</span>
 			</div>
 			<p class="mx-auto mb-8 max-w-sm text-sm text-muted-foreground">
-				Promo berlaku untuk seluruh Taiwan. (Di luar wilayah Taipei dan New Taipei akan dikenakan
-				biaya transportasi tambahan).
+				{tr(
+					'Promo berlaku untuk seluruh Taiwan. (Di luar wilayah Taipei dan New Taipei akan dikenakan biaya transportasi tambahan).',
+					'The promo applies across Taiwan. Additional transportation fees apply outside Taipei and New Taipei.'
+				)}
 			</p>
 			<Button href="/contact" size="lg" class="w-full px-12 font-bold sm:w-auto">
-				Daftar Sekarang
+				{tr('Daftar Sekarang', 'Register Now')}
 			</Button>
 		</Card.Content>
 	</Card.Root>
