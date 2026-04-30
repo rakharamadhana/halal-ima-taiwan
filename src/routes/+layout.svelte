@@ -32,6 +32,12 @@
 							Tentang Kami
 						</a>
 						<a
+							href="/halal-awareness"
+							class="text-foreground/60 transition-colors hover:text-foreground/80"
+						>
+							Informasi Halal
+						</a>
+						<a
 							href="/procedures"
 							class="text-foreground/60 transition-colors hover:text-foreground/80"
 						>
@@ -43,7 +49,10 @@
 						>
 							Sertifikasi
 						</a>
-						<a href="/contact" class="text-foreground/60 transition-colors hover:text-foreground/80">
+						<a
+							href="/contact"
+							class="text-foreground/60 transition-colors hover:text-foreground/80"
+						>
 							Hubungi Kami
 						</a>
 					</nav>
@@ -61,7 +70,9 @@
 								class="flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-bold text-primary transition-colors hover:bg-primary/20"
 							>
 								<LayoutDashboard class="h-4 w-4" />
-								<span class="hidden lg:inline">{data.user.role === 'admin' ? 'Panel Admin' : 'Dashboard'}</span>
+								<span class="hidden lg:inline"
+									>{data.user.role === 'admin' ? 'Panel Admin' : 'Dashboard'}</span
+								>
 							</a>
 							<form action="/logout" method="POST" use:enhance>
 								<Button variant="ghost" size="sm" type="submit" class="gap-2 text-xs font-bold">
@@ -100,11 +111,14 @@
 		<!-- Mobile Menu Overlay -->
 		{#if mobileMenuOpen}
 			<div
-				class="fixed inset-0 top-16 z-50 animate-in fade-in slide-in-from-top-4 bg-background lg:hidden"
+				class="fixed inset-0 top-16 z-50 animate-in bg-background fade-in slide-in-from-top-4 lg:hidden"
 			>
 				<nav class="flex flex-col space-y-4 p-6 text-lg font-medium">
 					<a href="/about" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
 						Tentang Kami
+					</a>
+					<a href="/halal-awareness" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
+						Informasi Halal
 					</a>
 					<a href="/procedures" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
 						Prosedur
@@ -115,7 +129,7 @@
 					<a href="/contact" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
 						Hubungi Kami
 					</a>
-					<div class="pt-4 text-sm text-muted-foreground uppercase tracking-wider">Akun</div>
+					<div class="pt-4 text-sm tracking-wider text-muted-foreground uppercase">Akun</div>
 					{#if data.user}
 						<a
 							href={data.user.role === 'admin' ? '/admin' : '/dashboard'}
@@ -145,7 +159,7 @@
 							Masuk
 						</a>
 					{/if}
-					<div class="flex items-center justify-between pt-6 border-t font-normal text-base">
+					<div class="flex items-center justify-between border-t pt-6 text-base font-normal">
 						<span>Tema</span>
 						<ThemeToggle />
 					</div>

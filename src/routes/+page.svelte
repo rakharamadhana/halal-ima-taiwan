@@ -1,6 +1,12 @@
 <script lang="ts">
 	import { Button } from '$lib/components/ui/button';
 	import logo from '$lib/assets/logo/halal-ima-transparent.png';
+	import {
+		BookOpenCheck,
+		ChartNoAxesCombined,
+		MessageSquareQuote,
+		ShieldCheck
+	} from 'lucide-svelte';
 </script>
 
 <svelte:head>
@@ -57,6 +63,46 @@
 	</div>
 </section>
 
+<section class="container mx-auto px-4 py-20">
+	<div class="grid gap-10 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
+		<div class="space-y-5">
+			<div
+				class="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-semibold text-primary"
+			>
+				<BookOpenCheck class="h-4 w-4" />
+				Halal Awareness
+			</div>
+			<h2 class="text-3xl font-bold tracking-tight md:text-4xl">
+				Informasi halal untuk bisnis yang ingin dipercaya.
+			</h2>
+			<p class="text-muted-foreground">
+				Pelajari kenapa halal penting, bagaimana menjaga proses usaha tetap aman, data populasi
+				muslim di Taiwan, testimoni, dan ajakan dari Ketua IMA untuk membangun kesadaran halal
+				bersama.
+			</p>
+			<Button href="/halal-awareness" size="lg" class="font-bold">Baca Informasi Halal</Button>
+		</div>
+
+		<div class="grid gap-4 sm:grid-cols-3">
+			<div class="rounded-xl border bg-card p-5 shadow-sm">
+				<ShieldCheck class="mb-4 h-8 w-8 text-primary" />
+				<h3 class="mb-2 font-bold">Kenapa Halal</h3>
+				<p class="text-sm text-muted-foreground">Aman, transparan, dan meningkatkan kepercayaan.</p>
+			</div>
+			<div class="rounded-xl border bg-card p-5 shadow-sm">
+				<ChartNoAxesCombined class="mb-4 h-8 w-8 text-primary" />
+				<h3 class="mb-2 font-bold">Data Taiwan</h3>
+				<p class="text-sm text-muted-foreground">Estimasi komunitas muslim dan konteks pasar.</p>
+			</div>
+			<div class="rounded-xl border bg-card p-5 shadow-sm">
+				<MessageSquareQuote class="mb-4 h-8 w-8 text-primary" />
+				<h3 class="mb-2 font-bold">Testimoni</h3>
+				<p class="text-sm text-muted-foreground">Cerita dari pelaku usaha dan komunitas.</p>
+			</div>
+		</div>
+	</div>
+</section>
+
 <section class="container mx-auto px-4 py-24">
 	<div class="mx-auto grid max-w-5xl grid-cols-1 gap-8 text-center md:grid-cols-3">
 		<div class="flex flex-col items-center space-y-3 rounded-lg border bg-card p-6 shadow-sm">
@@ -75,9 +121,9 @@
 				>
 			</div>
 			<h3 class="text-xl font-bold">Terdata KDEI Taipei</h3>
-			<p class="text-muted-foreground text-sm">
-				IMA Taiwan yang diresmikan dan tercatat secara resmi di Kantor Dagang dan Ekonomi
-				Indonesia (KDEI) Taipei.
+			<p class="text-sm text-muted-foreground">
+				IMA Taiwan yang diresmikan dan tercatat secara resmi di Kantor Dagang dan Ekonomi Indonesia
+				(KDEI) Taipei.
 			</p>
 		</div>
 
