@@ -7,17 +7,25 @@
 	import { enhance } from '$app/forms';
 	import { Mail, CheckCircle2, Link2, MessageCircle, MessageSquare } from 'lucide-svelte';
 	import { tr } from '$lib/i18n.svelte';
+	import { onMount } from 'svelte';
 
 	let { form } = $props();
 	let isSubmitting = $state(false);
 	let isLocalhost = $derived(typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'));
+
+	onMount(() => {
+		if (!isLocalhost) {
+			const script = document.createElement('script');
+			script.src = 'https://js.hcaptcha.com/1/api.js';
+			script.async = true;
+			script.defer = true;
+			document.head.appendChild(script);
+		}
+	});
 </script>
 
 <svelte:head>
 	<title>{tr('Hubungi Kami', 'Contact Us')} - Halal IMA Taiwan</title>
-	{#if !isLocalhost}
-		<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
-	{/if}
 </svelte:head>
 
 <div class="container mx-auto max-w-6xl px-4 py-16">
