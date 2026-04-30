@@ -20,9 +20,9 @@
 
 <div class="flex min-h-screen flex-col bg-background font-sans">
 	<header
-		class="sticky top-0 z-40 w-full border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+		class="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur supports-backdrop-filter:bg-background/60"
 	>
-		<div class="container mx-auto flex h-16 items-center px-4">
+		<div class="container mx-auto flex h-16 items-center px-4 overflow-hidden">
 			<div class="flex w-full items-center justify-between">
 				<div class="flex items-center space-x-6">
 					<a href="/" class="flex items-center space-x-2" onclick={closeMenu}>
@@ -112,35 +112,36 @@
 				</div>
 			</div>
 		</div>
+	</header>
 
-		<!-- Mobile Menu Overlay -->
-		{#if mobileMenuOpen}
-			<div
-				class="fixed inset-0 top-16 z-50 animate-in bg-background fade-in slide-in-from-top-4 lg:hidden"
-			>
-				<nav class="flex flex-col space-y-4 p-6 text-lg font-medium">
-					<a href="/about" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
+	<!-- Mobile Menu Overlay -->
+	{#if mobileMenuOpen}
+		<div
+			class="fixed inset-0 top-16 z-50 overflow-y-auto bg-background lg:hidden"
+		>
+				<nav class="flex flex-col space-y-6 p-6 text-lg font-medium pb-20">
+					<a href="/about" class="border-b pb-3 hover:text-primary" onclick={closeMenu}>
 						{tr('Tentang Kami', 'About Us')}
 					</a>
-					<a href="/halal-awareness" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
+					<a href="/halal-awareness" class="border-b pb-3 hover:text-primary" onclick={closeMenu}>
 						{tr('Informasi Halal', 'Halal Info')}
 					</a>
-					<a href="/procedures" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
+					<a href="/procedures" class="border-b pb-3 hover:text-primary" onclick={closeMenu}>
 						{tr('Prosedur', 'Procedure')}
 					</a>
-					<a href="/certifications" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
+					<a href="/certifications" class="border-b pb-3 hover:text-primary" onclick={closeMenu}>
 						{tr('Sertifikasi', 'Certificates')}
 					</a>
-					<a href="/contact" class="border-b pb-2 hover:text-primary" onclick={closeMenu}>
+					<a href="/contact" class="border-b pb-3 hover:text-primary" onclick={closeMenu}>
 						{tr('Hubungi Kami', 'Contact Us')}
 					</a>
-					<div class="pt-4 text-sm tracking-wider text-muted-foreground uppercase">
+					<div class="pt-6 text-sm tracking-wider text-muted-foreground uppercase">
 						{tr('Akun', 'Account')}
 					</div>
 					{#if data.user}
 						<a
 							href={data.user.role === 'admin' ? '/admin' : '/dashboard'}
-							class="flex items-center gap-3 rounded-lg bg-primary/10 p-3 text-primary"
+							class="flex items-center gap-3 rounded-lg bg-primary/10 p-4 text-primary"
 							onclick={closeMenu}
 						>
 							<LayoutDashboard class="h-5 w-5" />
@@ -149,7 +150,7 @@
 						<form action="/logout" method="POST" use:enhance class="w-full">
 							<button
 								type="submit"
-								class="flex w-full items-center gap-3 rounded-lg p-3 text-destructive"
+								class="flex w-full items-center gap-3 rounded-lg p-4 text-destructive"
 								onclick={closeMenu}
 							>
 								<LogOut class="h-5 w-5" />
@@ -159,7 +160,7 @@
 					{:else}
 						<a
 							href="/login"
-							class="flex items-center gap-3 rounded-lg bg-primary p-3 text-primary-foreground"
+							class="flex items-center gap-3 rounded-lg bg-primary p-4 text-primary-foreground"
 							onclick={closeMenu}
 						>
 							<LogIn class="h-5 w-5" />
@@ -177,7 +178,6 @@
 				</nav>
 			</div>
 		{/if}
-	</header>
 
 	<main class="flex-1">
 		{@render children()}
@@ -195,7 +195,6 @@
 						'Ensuring the highest halal compliance standards.'
 					)}
 				</p>
-				<p class="text-xs text-muted-foreground">LINE: @fathurrahman_alhady</p>
 			</div>
 		</div>
 	</footer>

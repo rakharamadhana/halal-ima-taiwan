@@ -11,6 +11,7 @@
 	let status = $derived(data.request.status);
 	let adminNotes = $derived(data.request.admin_notes || '');
 	let submitting = $state(false);
+	let navigatingBack = $state(false);
 </script>
 
 <svelte:head>
@@ -19,8 +20,21 @@
 
 <div class="container mx-auto px-4 py-8">
 	<div class="mb-6">
-		<Button variant="ghost" size="sm" onclick={() => goto('/admin')}>
-			<ArrowLeft class="h-4 w-4 mr-2" /> {tr('Kembali ke Admin Panel', 'Back to Admin Panel')}
+		<Button 
+			variant="ghost" 
+			size="sm" 
+			disabled={navigatingBack}
+			onclick={() => {
+				navigatingBack = true;
+				goto('/admin');
+			}}
+		>
+			{#if navigatingBack}
+				<Loader2 class="h-4 w-4 mr-2 animate-spin" />
+			{:else}
+				<ArrowLeft class="h-4 w-4 mr-2" />
+			{/if}
+			{tr('Kembali ke Admin Panel', 'Back to Admin Panel')}
 		</Button>
 	</div>
 

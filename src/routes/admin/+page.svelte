@@ -2,8 +2,9 @@
 	import * as Card from '$lib/components/ui/card';
 	import * as Table from '$lib/components/ui/table';
 	import { Button } from '$lib/components/ui/button';
-	import { Users, ShieldAlert, CheckCircle2, FileText, Loader2 } from 'lucide-svelte';
+	import { Users, ShieldAlert, CheckCircle2, FileText, Loader2, Download } from 'lucide-svelte';
 	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
 	import { tr } from '$lib/i18n.svelte';
 
 	let { data } = $props();
@@ -29,6 +30,8 @@
 
 	let certificationRequests: CertificationRequest[] = $derived(data.certificationRequests);
 	let navigatingTo = $state<number | null>(null);
+	let navigatingToUser = $state<string | null>(null);
+	let downloadingReport = $state(false);
 </script>
 
 <svelte:head>
@@ -42,7 +45,35 @@
 			<p class="text-muted-foreground">{tr('Kelola pendaftaran perusahaan dan verifikasi akun.', 'Manage company registration and account verification.')}</p>
 		</div>
 		<div class="flex gap-2">
-			<Button variant="outline" size="sm">{tr('Download Laporan', 'Download Report')}</Button>
+			<form 
+				method="POST" 
+				action="?/downloadReport" 
+				use:enhance={() => {
+					downloadingReport = true;
+					return async ({ result }) => {
+						downloadingReport = false;
+						
+						if (result.type === 'success' && result.data?.fileData) {
+							// Create download link
+							const link = document.createElement('a');
+							link.href = `data:application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;base64,${result.data.fileData as string}`;
+							link.download = result.data.filename as string;
+							document.body.appendChild(link);
+							link.click();
+							document.body.removeChild(link);
+						}
+					};
+				}}
+			>
+				<Button variant="outline" size="sm" type="submit" disabled={downloadingReport}>
+					{#if downloadingReport}
+						<Loader2 class="h-4 w-4 mr-2 animate-spin" />
+					{:else}
+						<Download class="h-4 w-4 mr-2" />
+					{/if}
+					{tr('Download Laporan', 'Download Report')}
+				</Button>
+			</form>
 		</div>
 	</div>
 
@@ -144,7 +175,21 @@
 									{new Date(profile.created_at).toLocaleDateString('id-ID')}
 								</Table.Cell>
 								<Table.Cell class="text-right whitespace-nowrap">
-									<Button size="xs" variant="outline" onclick={() => goto(`/admin/users/${profile.id}`)}>{tr('Detail', 'Detail')}</Button>
+									<Button 
+										size="xs" 
+										variant="outline" 
+										disabled={navigatingToUser === profile.id}
+										onclick={() => {
+											navigatingToUser = profile.id;
+											goto(`/admin/users/${profile.id}`);
+										}}
+									>
+										{#if navigatingToUser === profile.id}
+											<Loader2 class="h-3 w-3 animate-spin" />
+										{:else}
+											{tr('Detail', 'Detail')}
+										{/if}
+									</Button>
 									{#if !profile.is_verified}
 										<Button size="xs" class="ml-1 bg-green-600 hover:bg-green-700">{tr('Verify', 'Verify')}</Button>
 									{/if}

@@ -10,10 +10,14 @@
 
 	let { data, form } = $props();
 	let loading = $state(false);
+	let isLocalhost = $derived(typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'));
 </script>
 
 <svelte:head>
 	<title>{tr('Masuk', 'Login')} - Halal IMA Taiwan</title>
+	{#if !isLocalhost}
+		<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+	{/if}
 </svelte:head>
 
 <div class="container mx-auto flex min-h-[70vh] items-center justify-center px-4 py-24">
@@ -81,6 +85,13 @@
 					</div>
 					<Input id="password" name="password" type="password" required />
 				</div>
+
+				{#if !isLocalhost}
+				<div class="space-y-2">
+					<Label for="h-captcha-response">{tr('Verifikasi', 'Verification')}</Label>
+					<div class="h-captcha" data-sitekey="b354642a-566c-45e8-8cb0-adee20f65ca4"></div>
+				</div>
+				{/if}
 
 				<Button type="submit" class="w-full font-bold" disabled={loading}>
 					{#if loading}

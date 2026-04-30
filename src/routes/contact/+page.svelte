@@ -5,15 +5,19 @@
 	import { Label } from '$lib/components/ui/label';
 	import * as Card from '$lib/components/ui/card';
 	import { enhance } from '$app/forms';
-	import { Mail, CheckCircle2, Link2, MessageCircle } from 'lucide-svelte';
+	import { Mail, CheckCircle2, Link2, MessageCircle, MessageSquare } from 'lucide-svelte';
 	import { tr } from '$lib/i18n.svelte';
 
 	let { form } = $props();
 	let isSubmitting = $state(false);
+	let isLocalhost = $derived(typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1'));
 </script>
 
 <svelte:head>
 	<title>{tr('Hubungi Kami', 'Contact Us')} - Halal IMA Taiwan</title>
+	{#if !isLocalhost}
+		<script src="https://js.hcaptcha.com/1/api.js" async defer></script>
+	{/if}
 </svelte:head>
 
 <div class="container mx-auto max-w-6xl px-4 py-16">
@@ -73,6 +77,23 @@
 							class="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
 						>
 							@halalimataiwan
+						</a>
+					</div>
+				</div>
+
+				<div class="flex items-start space-x-4">
+					<div class="mt-1 rounded-full bg-primary/10 p-2">
+						<MessageSquare class="h-5 w-5 text-primary" />
+					</div>
+					<div>
+						<h3 class="font-bold">LINE</h3>
+						<a
+							href="https://line.me/ti/p/~fathurrahman_alhady"
+							target="_blank"
+							rel="noopener noreferrer"
+							class="text-muted-foreground underline-offset-2 hover:text-primary hover:underline"
+						>
+							{tr('Chat via LINE', 'Chat via LINE')}
 						</a>
 					</div>
 				</div>
@@ -157,6 +178,13 @@
 								required
 							/>
 						</div>
+
+						{#if !isLocalhost}
+						<div class="space-y-2">
+							<Label for="h-captcha-response">{tr('Verifikasi', 'Verification')}</Label>
+							<div class="h-captcha" data-sitekey="b354642a-566c-45e8-8cb0-adee20f65ca4"></div>
+						</div>
+						{/if}
 
 						<Button type="submit" class="w-full" disabled={isSubmitting}>
 							{isSubmitting ? tr('Mengirim...', 'Sending...') : tr('Kirim Pesan', 'Send Message')}

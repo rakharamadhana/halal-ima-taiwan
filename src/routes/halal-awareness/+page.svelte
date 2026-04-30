@@ -177,6 +177,172 @@
 
 	<section class="mb-20">
 		<div class="mb-10 max-w-3xl">
+			<div class="mb-3 flex items-center gap-2 font-semibold text-primary">
+				<BookOpenCheck class="h-5 w-5" />
+				{tr('Landasan Islami', 'Islamic Foundation')}
+			</div>
+			<h2 class="mb-4 text-3xl font-bold">{tr('Ayat & Hadits tentang Halal', 'Verses & Hadith about Halal')}</h2>
+			<p class="text-muted-foreground">
+				{tr(
+					'Halal bukan hanya standar kualitas, tetapi perintah Allah SWT dan Rasulullah SAW untuk menjaga kebersihan dan kehalalan dalam setiap aspek kehidupan.',
+					'Halal is not just a quality standard, but a command from Allah SWT and Prophet Muhammad SAW to maintain cleanliness and purity in every aspect of life.'
+				)}
+			</p>
+		</div>
+
+		<!-- Beginner-friendly explanation -->
+		<Card.Root class="mb-8 border-primary/20 bg-primary/5">
+			<Card.Header>
+				<div class="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+					<BookOpenCheck class="h-5 w-5 text-primary" />
+				</div>
+				<Card.Title class="text-xl">{tr('Istilah Islami Dasar', 'Basic Islamic Terms')}</Card.Title>
+				<Card.Description>
+					{tr(
+						'Penjelasan singkat untuk memahami istilah yang digunakan dalam konteks halal.',
+						'Brief explanation to understand terms used in halal context.'
+					)}
+				</Card.Description>
+			</Card.Header>
+			<Card.Content class="space-y-4 text-muted-foreground">
+				<div class="space-y-2">
+					<p class="font-semibold text-foreground">Allah SWT</p>
+					<p>
+						{tr(
+							'Allah adalah nama Tuhan dalam Islam. "SWT" adalah singkatan dari "Subhanahu wa Ta\'ala" yang berarti "Maha Suci dan Maha Tinggi". Ini adalah cara Muslim menghormati Tuhan.',
+							'Allah is the name of God in Islam. "SWT" is an abbreviation for "Subhanahu wa Ta\'ala" meaning "Glorified and Exalted". This is how Muslims honor God.'
+						)}
+					</p>
+				</div>
+				<div class="space-y-2">
+					<p class="font-semibold text-foreground">Rasulullah SAW</p>
+					<p>
+						{tr(
+							'Rasulullah berarti "Utusan Allah" dan merujuk kepada Nabi Muhammad, nabi terakhir dalam Islam. "SAW" adalah singkatan dari "Sallallahu Alayhi wa Sallam" yang berarti "Semoga shalawat dan salam tercurah kepadanya".',
+							'Rasulullah means "Messenger of Allah" and refers to Prophet Muhammad, the final prophet in Islam. "SAW" is an abbreviation for "Sallallahu Alayhi wa Sallam" meaning "Peace and blessings be upon him".'
+						)}
+					</p>
+				</div>
+				<div class="space-y-2">
+					<p class="font-semibold text-foreground">Al-Quran</p>
+					<p>
+						{tr(
+							'Al-Quran adalah kitab suci Islam yang berisi firman Allah SWT. Muslim percaya bahwa Al-Quran adalah panduan hidup yang sempurna dan tidak berubah sejak diturunkan.',
+							'The Quran is the holy book of Islam containing the words of Allah SWT. Muslims believe the Quran is a perfect guide for life and has remained unchanged since it was revealed.'
+						)}
+					</p>
+				</div>
+				<div class="space-y-2">
+					<p class="font-semibold text-foreground">Hadits</p>
+					<p>
+						{tr(
+							'Hadits adalah perkataan, perbuatan, dan persetujuan Nabi Muhammad SAW yang dicatat oleh para sahabatnya. Hadits menjadi pedoman praktis untuk Muslim dalam menjalankan kehidupan sehari-hari.',
+							'Hadith are the sayings, actions, and approvals of Prophet Muhammad SAW recorded by his companions. Hadith serve as practical guidance for Muslims in their daily lives.'
+						)}
+					</p>
+				</div>
+				<div class="space-y-2">
+					<p class="font-semibold text-foreground">Halal</p>
+					<p>
+						{tr(
+							'Halal adalah istilah Arab yang berarti "diperbolehkan" atau "sah". Dalam konteks makanan dan produk, halal berarti sesuatu yang boleh dikonsumsi atau digunakan oleh Muslim sesuai dengan hukum Islam.',
+							'Halal is an Arabic term meaning "permitted" or "lawful". In the context of food and products, halal means something that Muslims are allowed to consume or use according to Islamic law.'
+						)}
+					</p>
+				</div>
+				<div class="space-y-2">
+					<p class="font-semibold text-foreground">Haram</p>
+					<p>
+						{tr(
+							'Haram adalah istilah Arab yang berarti "dilarang" atau "terlarang". Dalam konteks makanan dan produk, haram berarti sesuatu yang tidak boleh dikonsumsi atau digunakan oleh Muslim.',
+							'Haram is an Arabic term meaning "forbidden" or "prohibited". In the context of food and products, haram means something that Muslims are not allowed to consume or use.'
+						)}
+					</p>
+				</div>
+			</Card.Content>
+		</Card.Root>
+
+		<div class="grid gap-6 md:grid-cols-2">
+			<Card.Root class="border-primary/20 bg-primary/5">
+				<Card.Header>
+					<div class="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+						<BookOpenCheck class="h-5 w-5 text-primary" />
+					</div>
+					<Card.Title class="text-xl">{tr('Al-Quran', 'The Quran')}</Card.Title>
+				</Card.Header>
+				<Card.Content class="space-y-4 text-muted-foreground">
+					<div class="space-y-2">
+						<p class="font-semibold text-foreground">QS. Al-Baqarah: 168</p>
+						<p class="italic">
+							{tr(
+								'"Wahai manusia! Makanlah yang halal lagi baik dari apa yang ada di bumi, dan janganlah kamu mengikuti langkah-langkah syaitan, karena sesungguhnya syaitan itu adalah musuh yang nyata bagimu."',
+								'"O mankind! Eat of what is lawful and good on the earth and do not follow the footsteps of Satan. Indeed, he is to you a clear enemy."'
+							)}
+						</p>
+					</div>
+					<div class="space-y-2">
+						<p class="font-semibold text-foreground">QS. Al-Ma'idah: 88</p>
+						<p class="italic">
+							{tr(
+								'"Dan makanlah makanan yang halal lagi baik dari apa yang Allah telah rezekikan kepadamu, dan bertakwalah kepada Allah jika kamu benar-benar beriman kepada-Nya."',
+								'"And eat of what Allah has provided for you, which is lawful and good, and fear Allah if you truly believe in Him."'
+							)}
+						</p>
+					</div>
+					<div class="space-y-2">
+						<p class="font-semibold text-foreground">QS. Al-A'raf: 32</p>
+						<p class="italic">
+							{tr(
+								'"Katakanlah: Siapakah yang mengharamkan perhiasan Allah yang telah Dia keluarkan untuk hamba-hamba-Nya dan rezeki yang baik?"',
+								'"Say: Who has forbidden the adornment of Allah which He has produced for His servants and the good provisions?"'
+							)}
+						</p>
+					</div>
+				</Card.Content>
+			</Card.Root>
+
+			<Card.Root class="border-primary/20 bg-primary/5">
+				<Card.Header>
+					<div class="mb-2 flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+						<MessageSquareQuote class="h-5 w-5 text-primary" />
+					</div>
+					<Card.Title class="text-xl">{tr('Hadits Nabi SAW', 'Hadith of Prophet SAW')}</Card.Title>
+				</Card.Header>
+				<Card.Content class="space-y-4 text-muted-foreground">
+					<div class="space-y-2">
+						<p class="font-semibold text-foreground">HR. Muslim</p>
+						<p class="italic">
+							{tr(
+								'"Rasulullah SAW bersabda: Sesungguhnya Allah itu baik dan tidak menerima kecuali yang baik. Sesungguhnya Allah memerintahkan orang-orang mukmin sebagaimana Dia memerintahkan para rasul-Nya, sebagaimana firman-Nya: Hai rasul-rasul, makanlah dari yang baik-baik dan kerjakanlah amal yang shalih."',
+								'"The Prophet SAW said: Indeed, Allah is good and accepts only good. Indeed, Allah commands the believers as He commanded the messengers, as He said: O messengers, eat from the good things and do righteous deeds."'
+							)}
+						</p>
+					</div>
+					<div class="space-y-2">
+						<p class="font-semibold text-foreground">HR. Bukhari & Muslim</p>
+						<p class="italic">
+							{tr(
+								'"Rasulullah SAW bersabda: Sesungguhnya halal itu jelas dan haram itu jelas. Di antara keduanya ada perkara yang syubhat (meragukan), yang tidak diketahui oleh kebanyakan orang. Barangsiapa menjauhi perkara syubhat, maka ia telah membersihkan agama dan kehormatannya."',
+								'"The Prophet SAW said: Indeed, what is lawful is clear and what is unlawful is clear. Between them are doubtful matters that few people know. Whoever avoids doubtful matters clears his religion and honor."'
+							)}
+						</p>
+					</div>
+					<div class="space-y-2">
+						<p class="font-semibold text-foreground">HR. Tirmidzi</p>
+						<p class="italic">
+							{tr(
+								'"Rasulullah SAW bersabda: Sesungguhnya Allah SWT menurunkan berkah dan keberkahan pada kebenaran, dan tidak menurunkan berkah pada dusta. Sesungguhnya Allah memerintahkan para rasul-Nya dengan kejujuran dan memerintahkan mereka untuk menyampaikan amanah."',
+								'"The Prophet SAW said: Indeed, Allah SWT sends down blessing and prosperity upon truth, and does not send down blessing upon falsehood. Indeed, Allah commands His messengers with truth and commands them to convey the trust."'
+							)}
+						</p>
+					</div>
+				</Card.Content>
+			</Card.Root>
+		</div>
+	</section>
+
+	<section class="mb-20">
+		<div class="mb-10 max-w-3xl">
 			<h2 class="mb-4 text-3xl font-bold">{tr('Kenapa Harus Halal?', 'Why Halal?')}</h2>
 			<p class="text-muted-foreground">
 				{tr(
