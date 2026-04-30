@@ -50,6 +50,7 @@
 	"dependencies": {
 		"@supabase/ssr": "^0.10.2",
 		"@supabase/supabase-js": "^2.103.3",
+		"@vercel/analytics": "^2.0.1",
 		"mode-watcher": "^1.1.0",
 		"xlsx": "^0.18.5"
 	}

@@ -1,5 +1,7 @@
 <script lang="ts">
 	import './layout.css';
+	import { dev } from '$app/environment';
+	import { injectAnalytics } from '@vercel/analytics/sveltekit';
 	import { ModeWatcher } from 'mode-watcher';
 	import ThemeToggle from '$lib/components/ThemeToggle.svelte';
 	import LanguageToggle from '$lib/components/LanguageToggle.svelte';
@@ -8,6 +10,9 @@
 	import { enhance } from '$app/forms';
 	import logo from '$lib/assets/logo/halal-ima-transparent.png';
 	import { tr } from '$lib/i18n.svelte';
+
+	// Initialize Vercel Analytics
+	injectAnalytics({ mode: dev ? 'development' : 'production' });
 
 	let { children, data } = $props();
 	let mobileMenuOpen = $state(false);

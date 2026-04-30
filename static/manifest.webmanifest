@@ -1,0 +1,10 @@
+{
+  "name": "Halal IMA Taiwan",
+  "short_name": "Halal IMA",
+  "description": "Halal IMA Taiwan Application",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "icons": []
+}
